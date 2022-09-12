@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 //Requerimiento 1.- eliminar las dobles comillas del printf e interpretar 
-//las secuencias de escape dentro de la cadena
+//las secuencias de escape dentro de la cadena Completado
 //Requerimiento 2.- Marcar los errores Sintacticos cuando la variable no exista
 //Si no existe la variable (get contenido) levantamos una escepcion 
 namespace evalua
@@ -179,10 +179,14 @@ namespace evalua
         //Asignacion -> identificador = cadena | Expresion;
         private void Asignacion()
         {
-            match(Tipos.Identificador);
-            match(Tipos.Asignacion);
-            Expresion();
-            match(";");
+            if (existeVariable(getContenido())){
+                match(Tipos.Identificador);
+                match(Tipos.Asignacion);
+                Expresion();
+                match(";");
+            }else{
+                throw new Error("Error de syntaxis: variable no declarada: <"+getContenido()+"> en linea  "+linea, log);
+            }
         }
 
         //While -> while(Condicion) bloque de instrucciones | instruccion
@@ -243,6 +247,7 @@ namespace evalua
         //Incremento -> Identificador ++ | --
         private void Incremento()
         {
+            if (existeVariable(getContenido())){
             match(Tipos.Identificador);
             if (getContenido() == "+")
             {
@@ -251,6 +256,10 @@ namespace evalua
             else
             {
                 match("--");
+            }
+            }else
+            {
+                throw new Error("Error de syntaxis: variable no declarada: <"+getContenido()+"> en linea  "+linea, log);
             }
         }
 
@@ -343,7 +352,7 @@ namespace evalua
             string str = getContenido();
             string cleaned = str.Trim('"');
             cleaned  = cleaned.Replace("\\n", "").Replace("\\r", "");
-            Console.Write(cleaned);
+            Console.WriteLine(cleaned);
             match(Tipos.Cadena);
             match(")");
             match(";");

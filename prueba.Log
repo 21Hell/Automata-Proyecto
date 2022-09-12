@@ -1,10 +1,12 @@
 Archivo: prueba.cpp
-9/3/2022 12:37:10 AM
+9/3/2022 1:09:15 AM
 resultado Float 0
 a Int 0
 b Int 0
 c Int 0
 d Int 0
+valor Int 0
+i Int 0
 opcion Char 0
 radio Float 0
 altura Float 0
