@@ -45,6 +45,8 @@ namespace evalua
         }
         private void displayVariables()
         {
+            log.WriteLine();
+            log.WriteLine("Variables: ");
             foreach (Variable v in variables)
             {
                 log.WriteLine(v.getNombre()+" "+v.getTipo()+" "+v.getValor());
@@ -294,12 +296,12 @@ namespace evalua
             string variable = getContenido();
             if (existeVariable(getContenido())){
             match(Tipos.Identificador);
-            if (getContenido() == "+")
+            if (getContenido() == "++")
             {
                 match("++");
                 modVariable(variable,getValor(variable)+1);
             }
-            else
+            else if (getContenido() == "--") 
             {
                 match("--");
                 modVariable(variable,getValor(variable)-1);
@@ -356,6 +358,7 @@ namespace evalua
         //Condicion -> Expresion operador relacional Expresion
         private void Condicion()
         {
+
             Expresion();
             stack.Pop();
             match(Tipos.OperadorRelacional);
