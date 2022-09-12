@@ -16,6 +16,9 @@ using System.Collections.Generic;
 
 
 //Requerimeinto 5 .- Modificar el valor de la variable en scanf   Completado
+
+
+
 namespace evalua
 {
     public class Lenguaje : Sintaxis
