@@ -24,6 +24,9 @@ namespace evalua
         {
 
         }
+        private string limpiarPrints(string sucio){
+            
+        }
         private void addVariable(String nombre, Variable.TipoDato tipo)
         {
             variables.Add(new Variable(nombre, tipo));
@@ -383,7 +386,6 @@ namespace evalua
             match("printf");
             match("(");
             if(getClasificacion() == Tipos.Cadena){
-            Console.Write(getContenido()+" HOLA");
             string str = getContenido();
             string cleaned = str.TrimStart('"');
             cleaned.Remove((cleaned.Length-1),1);
