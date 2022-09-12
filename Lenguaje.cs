@@ -5,7 +5,8 @@ using System.Collections.Generic;
 //las secuencias de escape dentro de la cadena Completado
 //Requerimiento 2.- Marcar los errores Sintacticos cuando la variable no exista
 //Si no existe la variable (get contenido) levantamos una escepcion 
-//Requerimiento 3.- Modificar el valor de la variable en la asignacion 
+//Requerimiento 3.- Modificar el valor de la variable en la asignacion
+//Requerimineto 4.- Obtener el valor de la variable cuando se requiera y programar el metodo getValor   Printf Cadena o expresion
 namespace evalua
 {
     public class Lenguaje : Sintaxis
@@ -54,6 +55,16 @@ namespace evalua
                 }
         }
 
+        private float getValor(string nombre){
+            float valorV = 0;
+            foreach (Variable v in variables)
+            {
+                if(v.getNombre().Equals(nombre)){
+                valorV = v.getValor();
+                }
+            }
+            return valorV;
+        }
 
 
         //Programa  -> Librerias? Variables? Main
@@ -267,15 +278,18 @@ namespace evalua
         //Incremento -> Identificador ++ | --
         private void Incremento()
         {
+            string variable = getContenido();
             if (existeVariable(getContenido())){
             match(Tipos.Identificador);
             if (getContenido() == "+")
             {
                 match("++");
+                modVariable(variable,getValor(variable)+1);
             }
             else
             {
                 match("--");
+                modVariable(variable,getValor(variable)-1);
             }
             }else
             {
@@ -289,6 +303,7 @@ namespace evalua
             match("switch");
             match("(");
             Expresion();
+            stack.Pop();
             match(")");
             match("{");
             ListaDeCasos();
@@ -313,6 +328,7 @@ namespace evalua
         {
             match("case");
             Expresion();
+            stack.Pop();
             match(":");
             ListaInstruccionesCase();
             if (getContenido() == "break")
@@ -330,8 +346,10 @@ namespace evalua
         private void Condicion()
         {
             Expresion();
+            stack.Pop();
             match(Tipos.OperadorRelacional);
             Expresion();
+            stack.Pop();
         }
 
         //If -> if(Condicion) bloque de instrucciones (else bloque de instrucciones)?
@@ -368,21 +386,26 @@ namespace evalua
         {
             match("printf");
             match("(");
-            //Requerimineto 1 TERMINADO 
+            if(getClasificacion() == Tipos.Cadena){
             string str = getContenido();
             string cleaned = str.Trim('"');
-            //if(cleaned contains //n)
             if(cleaned.Contains("\n")){
                 Console.WriteLine(cleaned.Replace("\\n", ""));
             }else{
                 Console.Write(cleaned);
             }
             match(Tipos.Cadena);
+            }else{
+                string str = getContenido();
+                string cleaned = str.Trim('"');
+                Expresion();
+                Console.Write(stack.Pop());
+            }
             match(")");
             match(";");
         }
 
-        //Scanf -> scanf(cadena);
+        //Scanf -> scanf(cadena, & identificador );
         private void Scanf()
         {
             match("scanf");
@@ -466,15 +489,18 @@ namespace evalua
             if (getClasificacion() == Tipos.Numero)
             {
                 log.Write(getContenido());
+                log.Write(" ");
                 stack.Push(float.Parse(getContenido()));
                 match(Tipos.Numero);
             }
             else if (getClasificacion() == Tipos.Identificador)
             {
                 if (existeVariable(getContenido())){
+                    log.Write(getContenido());
+                    log.Write(" ");
+                    stack.Push(getValor(getContenido()));
                     match(Tipos.Identificador);
-                    }else
-                    {
+                }else{
                         throw new Error("Error de syntaxis: variable no declarada: <"+getContenido()+"> en linea  "+linea, log);
                     }
                 
