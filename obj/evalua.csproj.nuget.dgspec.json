@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/cwolf-laptop/Downloads/evalua/evalua.csproj": {}
+    "/home/cwolf-laptop/Documents/evalua/evalua.csproj": {}
   },
   "projects": {
-    "/home/cwolf-laptop/Downloads/evalua/evalua.csproj": {
+    "/home/cwolf-laptop/Documents/evalua/evalua.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/cwolf-laptop/Downloads/evalua/evalua.csproj",
+        "projectUniqueName": "/home/cwolf-laptop/Documents/evalua/evalua.csproj",
         "projectName": "evalua",
-        "projectPath": "/home/cwolf-laptop/Downloads/evalua/evalua.csproj",
+        "projectPath": "/home/cwolf-laptop/Documents/evalua/evalua.csproj",
         "packagesPath": "/root/.nuget/packages/",
-        "outputPath": "/home/cwolf-laptop/Downloads/evalua/obj/",
+        "outputPath": "/home/cwolf-laptop/Documents/evalua/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/root/.nuget/NuGet/NuGet.Config"

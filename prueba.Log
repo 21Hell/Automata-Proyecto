@@ -1,9 +1,11 @@
 Archivo: prueba.cpp
-9/5/2022 3:06:20 PM
+9/7/2022 10:59:10 AM
 
-a = 35+ 8*  104- 2/  - = 61
+x = 10 = 10
 
-b = 1010+ = 20
+a = 3 5 + 8 *  x 4 - 2 /  - = 61
+3 5 + 8 *  x 4 - 2 /  - 
+b = 10 10 + = 20
 resultado Float 0
 a Int 61
 b Int 20
@@ -14,4 +16,4 @@ i Int 0
 opcion Char 0
 radio Float 0
 altura Float 0
-x Float 0
+x Float 10
