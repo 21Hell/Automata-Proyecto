@@ -339,7 +339,11 @@ namespace evalua
         {
             match("printf");
             match("(");
-            Console.Write((getContenido().ToString()).Split('"'));
+            //Requerimineto 1 TERMINADO 
+            string str = getContenido();
+            string cleaned = str.Trim('"');
+            cleaned  = cleaned.Replace("\\n", "").Replace("\\r", "");
+            Console.Write(cleaned);
             match(Tipos.Cadena);
             match(")");
             match(";");

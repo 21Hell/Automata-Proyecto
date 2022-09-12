@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/cwolf-laptop/Downloads/evalua/evalua.csproj": {}
+    "/home/cwolf/Documents/Automata-Proyecto/evalua.csproj": {}
   },
   "projects": {
-    "/home/cwolf-laptop/Downloads/evalua/evalua.csproj": {
+    "/home/cwolf/Documents/Automata-Proyecto/evalua.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/cwolf-laptop/Downloads/evalua/evalua.csproj",
+        "projectUniqueName": "/home/cwolf/Documents/Automata-Proyecto/evalua.csproj",
         "projectName": "evalua",
-        "projectPath": "/home/cwolf-laptop/Downloads/evalua/evalua.csproj",
-        "packagesPath": "/root/.nuget/packages/",
-        "outputPath": "/home/cwolf-laptop/Downloads/evalua/obj/",
+        "projectPath": "/home/cwolf/Documents/Automata-Proyecto/evalua.csproj",
+        "packagesPath": "/home/cwolf/.nuget/packages/",
+        "outputPath": "/home/cwolf/Documents/Automata-Proyecto/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/root/.nuget/NuGet/NuGet.Config"
+          "/home/cwolf/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"

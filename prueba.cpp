@@ -10,4 +10,6 @@ void main()
 {
     a=(3+5)*8-(10-4)/2; 
     printf("Hola");
+    printf("\nHola");
+
 }
