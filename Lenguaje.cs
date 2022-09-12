@@ -7,6 +7,7 @@ using System.Collections.Generic;
 //Si no existe la variable (get contenido) levantamos una escepcion 
 //Requerimiento 3.- Modificar el valor de la variable en la asignacion
 //Requerimineto 4.- Obtener el valor de la variable cuando se requiera y programar el metodo getValor   Printf Cadena o expresion
+//Requerimeinto 5 .- Modificar el valor de la variable en scanf
 namespace evalua
 {
     public class Lenguaje : Sintaxis
@@ -123,7 +124,6 @@ namespace evalua
                 }else{
                     throw new Error("Error de syntaxis: variable duplicada: <"+getContenido()+"> en linea  "+linea, log);
                 }
-                   
             }
             match(Tipos.Identificador);
             if (getContenido() == ",")
@@ -230,9 +230,7 @@ namespace evalua
             if (getContenido() == "{")
             {
                 BloqueInstrucciones();
-            }
-            else
-            {
+            }else{
                 Instruccion();
             }
         }
@@ -314,9 +312,7 @@ namespace evalua
                 if (getContenido() == "{")
                 {
                     BloqueInstrucciones();
-                }
-                else
-                {
+                }else{
                     Instruccion();
                 }
             }
@@ -387,17 +383,18 @@ namespace evalua
             match("printf");
             match("(");
             if(getClasificacion() == Tipos.Cadena){
+            Console.Write(getContenido()+" HOLA");
             string str = getContenido();
-            string cleaned = str.Trim('"');
-            if(cleaned.Contains("\n")){
-                Console.WriteLine(cleaned.Replace("\\n", ""));
-            }else{
-                Console.Write(cleaned);
-            }
+            string cleaned = str.TrimStart('"');
+            cleaned.Remove((cleaned.Length-1),1);
+            cleaned = cleaned.Replace(@"\n", "\n");
+            cleaned = cleaned.Replace(@"\t", "\t");
+            Console.Write(cleaned);
             match(Tipos.Cadena);
             }else{
                 string str = getContenido();
-                string cleaned = str.Trim('"');
+                string cleaned = str.TrimStart('"');
+                cleaned.Remove((cleaned.Length-1),1);
                 Expresion();
                 Console.Write(stack.Pop());
             }
@@ -405,16 +402,31 @@ namespace evalua
             match(";");
         }
 
-        //Scanf -> scanf(cadena, & identificador );
+        //Scanf -> scanf(cadena, &Identificador );
         private void Scanf()
         {
             match("scanf");
             match("(");
             match(Tipos.Cadena);
+            match(",");
+            match("&");
+            if (existeVariable(getContenido())){
+                log.Write(getContenido());
+                log.Write(" ");
+                stack.Push(getValor(getContenido()));
+                match(Tipos.Identificador);
+            }else{
+                throw new Error("Error de syntaxis: variable no declarada: <"+getContenido()+"> en linea  "+linea, log);
+            }
+            string val = ""+Console.ReadLine();
+            //Requerimeinto 5 .- Modificar el valor de la variable 
+            float valorFloat = float.Parse(val);
+            string NombreVariable = getContenido();
+            match(Tipos.Identificador);
+            modVariable(NombreVariable,valorFloat);
             match(")");
             match(";");
         }
-
         //Main      -> void main() Bloque de instrucciones
         private void Main()
         {
@@ -442,8 +454,6 @@ namespace evalua
                 log.Write(operador+" ");
                 float n1 = stack.Pop();
                 float n2 = stack.Pop();
-
-
                 switch (operador){
                     case "+":
                         stack.Push(n2+n1);
@@ -479,8 +489,6 @@ namespace evalua
                         stack.Push(n2/n1);
                     break;
                 }
-
-
             }
         }
         //Factor -> numero | identificador | (Expresion)
