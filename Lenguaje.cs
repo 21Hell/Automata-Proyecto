@@ -30,6 +30,7 @@ namespace evalua
         {
 
         }
+        
         public Lenguaje(string nombre) : base(nombre)
         {
 
