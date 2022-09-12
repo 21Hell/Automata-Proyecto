@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FGAsMGOMfN1y9LE+FEk7XtxYh9NgJG1DHPJhXPYJKq2XFVPuMZSr6NIXLYhGvnTAm4vxxXeqVA4hAcgtDCy5sw==",
+  "dgSpecHash": "6EkbuYkImuEvBmiEZNVhA5gSqxlQKFEUUiX/OEcC52JKBsUMe+USW2DEmW3tz7OpqRjxSDYQfHsBBoHDtpM56A==",
   "success": true,
-  "projectFilePath": "/home/cwolf-laptop/Documents/evalua/evalua.csproj",
+  "projectFilePath": "/home/cwolf/Documents/Automata-Proyecto/evalua.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

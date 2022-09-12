@@ -3,11 +3,19 @@ using System.Collections.Generic;
 
 //Requerimiento 1.- eliminar las dobles comillas del printf e interpretar 
 //las secuencias de escape dentro de la cadena Completado
-//Requerimiento 2.- Marcar los errores Sintacticos cuando la variable no exista
+
+
+//Requerimiento 2.- Marcar los errores Sintacticos cuando la variable no exista 
+//Completado
 //Si no existe la variable (get contenido) levantamos una escepcion 
-//Requerimiento 3.- Modificar el valor de la variable en la asignacion
-//Requerimineto 4.- Obtener el valor de la variable cuando se requiera y programar el metodo getValor   Printf Cadena o expresion
-//Requerimeinto 5 .- Modificar el valor de la variable en scanf
+
+
+//Requerimiento 3.- Modificar el valor de la variable en la asignacion   Completado
+
+//Requerimineto 4.- Obtener el valor de la variable cuando se requiera y programar el metodo getValor   Printf Cadena o expresion  Completado
+
+
+//Requerimeinto 5 .- Modificar el valor de la variable en scanf   Completado
 namespace evalua
 {
     public class Lenguaje : Sintaxis
@@ -25,7 +33,11 @@ namespace evalua
 
         }
         private string limpiarPrints(string sucio){
-            
+            string cleaned = sucio.TrimStart('"');
+            cleaned = cleaned.Remove(cleaned.Length-1);
+            cleaned = cleaned.Replace(@"\n", "\n");
+            cleaned = cleaned.Replace(@"\t", "\t");
+            return cleaned;
         }
         private void addVariable(String nombre, Variable.TipoDato tipo)
         {
@@ -386,17 +398,11 @@ namespace evalua
             match("printf");
             match("(");
             if(getClasificacion() == Tipos.Cadena){
-            string str = getContenido();
-            string cleaned = str.TrimStart('"');
-            cleaned.Remove((cleaned.Length-1),1);
-            cleaned = cleaned.Replace(@"\n", "\n");
-            cleaned = cleaned.Replace(@"\t", "\t");
-            Console.Write(cleaned);
-            match(Tipos.Cadena);
-            }else{
                 string str = getContenido();
-                string cleaned = str.TrimStart('"');
-                cleaned.Remove((cleaned.Length-1),1);
+                string cleaned = limpiarPrints(str);
+                Console.Write(cleaned);
+                match(Tipos.Cadena);
+            }else{
                 Expresion();
                 Console.Write(stack.Pop());
             }
@@ -413,21 +419,19 @@ namespace evalua
             match(",");
             match("&");
             if (existeVariable(getContenido())){
-                log.Write(getContenido());
-                log.Write(" ");
-                stack.Push(getValor(getContenido()));
+                string NombreVariable = getContenido();
                 match(Tipos.Identificador);
+                string val = ""+Console.ReadLine();
+                float valorFloat = float.Parse(val);
+                Console.Write(valorFloat);
+                modVariable(NombreVariable,valorFloat);
+                match(")");
+                match(";");
             }else{
                 throw new Error("Error de syntaxis: variable no declarada: <"+getContenido()+"> en linea  "+linea, log);
             }
-            string val = ""+Console.ReadLine();
-            //Requerimeinto 5 .- Modificar el valor de la variable 
-            float valorFloat = float.Parse(val);
-            string NombreVariable = getContenido();
-            match(Tipos.Identificador);
-            modVariable(NombreVariable,valorFloat);
-            match(")");
-            match(";");
+            
+            
         }
         //Main      -> void main() Bloque de instrucciones
         private void Main()

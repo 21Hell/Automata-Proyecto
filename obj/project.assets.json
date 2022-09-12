@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/cwolf-laptop/Documents/evalua/evalua.csproj",
+      "projectUniqueName": "/home/cwolf/Documents/Automata-Proyecto/evalua.csproj",
       "projectName": "evalua",
-      "projectPath": "/home/cwolf-laptop/Documents/evalua/evalua.csproj",
+      "projectPath": "/home/cwolf/Documents/Automata-Proyecto/evalua.csproj",
       "packagesPath": "/root/.nuget/packages/",
-      "outputPath": "/home/cwolf-laptop/Documents/evalua/obj/",
+      "outputPath": "/home/cwolf/Documents/Automata-Proyecto/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/root/.nuget/NuGet/NuGet.Config"
