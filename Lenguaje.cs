@@ -24,7 +24,6 @@ namespace evalua
     public class Lenguaje : Sintaxis
     {
         List<Variable> variables = new List<Variable>();
-
         Stack<float> stack = new Stack<float>();
         
         public Lenguaje()
