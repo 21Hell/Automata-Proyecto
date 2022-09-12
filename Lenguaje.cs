@@ -358,7 +358,6 @@ namespace evalua
         //Condicion -> Expresion operador relacional Expresion
         private void Condicion()
         {
-
             Expresion();
             stack.Pop();
             match(Tipos.OperadorRelacional);
