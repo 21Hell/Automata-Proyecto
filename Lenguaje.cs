@@ -5,11 +5,15 @@ using System.Collections.Generic;
 //las secuencias de escape dentro de la cadena Completado
 //Requerimiento 2.- Marcar los errores Sintacticos cuando la variable no exista
 //Si no existe la variable (get contenido) levantamos una escepcion 
+//Requerimiento 3.- Modificar el valor de la variable en la asignacion 
 namespace evalua
 {
     public class Lenguaje : Sintaxis
     {
         List<Variable> variables = new List<Variable>();
+
+        Stack<float> stack = new Stack<float>();
+        
         public Lenguaje()
         {
 
@@ -18,7 +22,7 @@ namespace evalua
         {
 
         }
-        private void addVariables(String nombre, Variable.TipoDato tipo)
+        private void addVariable(String nombre, Variable.TipoDato tipo)
         {
             variables.Add(new Variable(nombre, tipo));
         }
@@ -40,6 +44,15 @@ namespace evalua
             return false;
         }
 
+
+        private void modVariable(string nombre, float nuevoValor){
+                foreach (Variable v in variables){
+                    if (v.getNombre().Equals(nombre))
+                    {
+                        v.setValor(nuevoValor);
+                    }
+                }
+        }
 
 
 
@@ -95,7 +108,7 @@ namespace evalua
             if (getClasificacion() == Tipos.Identificador)
             {
                 if(!existeVariable(getContenido())){
-                    addVariables(getContenido(),tipo);
+                    addVariable(getContenido(),tipo);
                 }else{
                     throw new Error("Error de syntaxis: variable duplicada: <"+getContenido()+"> en linea  "+linea, log);
                 }
@@ -179,11 +192,18 @@ namespace evalua
         //Asignacion -> identificador = cadena | Expresion;
         private void Asignacion()
         {
+            log.WriteLine();
+            log.Write(getContenido()+" = ");
+            string NombreVar = getContenido();
             if (existeVariable(getContenido())){
                 match(Tipos.Identificador);
                 match(Tipos.Asignacion);
                 Expresion();
                 match(";");
+                float resultado = stack.Pop();
+                log.Write("= "+resultado);
+                log.WriteLine();
+                modVariable(NombreVar,resultado);
             }else{
                 throw new Error("Error de syntaxis: variable no declarada: <"+getContenido()+"> en linea  "+linea, log);
             }
@@ -351,8 +371,12 @@ namespace evalua
             //Requerimineto 1 TERMINADO 
             string str = getContenido();
             string cleaned = str.Trim('"');
-            cleaned  = cleaned.Replace("\\n", "").Replace("\\r", "");
-            Console.WriteLine(cleaned);
+            //if(cleaned contains //n)
+            if(cleaned.Contains("\n")){
+                Console.WriteLine(cleaned.Replace("\\n", ""));
+            }else{
+                Console.Write(cleaned);
+            }
             match(Tipos.Cadena);
             match(")");
             match(";");
@@ -389,8 +413,22 @@ namespace evalua
         {
             if (getClasificacion() == Tipos.OperadorTermino)
             {
+                string operador = getContenido();
                 match(Tipos.OperadorTermino);
                 Termino();
+                log.Write(operador+" ");
+                float n1 = stack.Pop();
+                float n2 = stack.Pop();
+
+
+                switch (operador){
+                    case "+":
+                        stack.Push(n2+n1);
+                    break;
+                    case "-":
+                        stack.Push(n2-n1);
+                    break;
+                }
             }
         }
         //Termino -> Factor PorFactor
@@ -404,8 +442,22 @@ namespace evalua
         {
             if (getClasificacion() == Tipos.OperadorFactor)
             {
+                string operador = getContenido();
                 match(Tipos.OperadorFactor);
                 Factor();
+                log.Write(operador+"  ");
+                float n1 = stack.Pop();
+                float n2 = stack.Pop();
+                switch (operador){
+                    case "*":
+                        stack.Push(n2*n1);
+                    break;
+                    case "/":
+                        stack.Push(n2/n1);
+                    break;
+                }
+
+
             }
         }
         //Factor -> numero | identificador | (Expresion)
@@ -413,11 +465,19 @@ namespace evalua
         {
             if (getClasificacion() == Tipos.Numero)
             {
+                log.Write(getContenido());
+                stack.Push(float.Parse(getContenido()));
                 match(Tipos.Numero);
             }
             else if (getClasificacion() == Tipos.Identificador)
             {
-                match(Tipos.Identificador);
+                if (existeVariable(getContenido())){
+                    match(Tipos.Identificador);
+                    }else
+                    {
+                        throw new Error("Error de syntaxis: variable no declarada: <"+getContenido()+"> en linea  "+linea, log);
+                    }
+                
             }
             else
             {

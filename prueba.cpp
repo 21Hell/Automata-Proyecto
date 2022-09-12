@@ -9,8 +9,9 @@ float radio, altura, x;
 void main()
 {
     a=(3+5)*8-(10-4)/2; 
-    printf("Hola");
-    printf("\nHola");
-    for(i = 10;i<10;i--){
-
-    }}
+    b=(10+10);
+    printf("hola");
+    printf("hola");
+    printf("\nadios");
+    
+}

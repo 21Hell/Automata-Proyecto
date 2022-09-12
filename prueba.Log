@@ -1,8 +1,12 @@
 Archivo: prueba.cpp
-9/3/2022 1:09:15 AM
+9/5/2022 3:06:20 PM
+
+a = 35+ 8*  104- 2/  - = 61
+
+b = 1010+ = 20
 resultado Float 0
-a Int 0
-b Int 0
+a Int 61
+b Int 20
 c Int 0
 d Int 0
 valor Int 0
